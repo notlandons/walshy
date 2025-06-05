@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr. Walsh Fanpage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: bold;
+    }
+    section {
+      padding: 2rem;
+    }
+    h2 {
+      color: #004080;
+    }
+    /* Gallery Styles */
+    .gallery-container {
+      position: relative;
+      overflow: hidden;
+      max-width: 90%;
+      margin: 0 auto;
+      height: 5=200px; /* Adjust height as needed */
+    }
+    .gallery-track {
+      display: flex;
+      /* width will be set dynamically via JS */
+    }
+    .gallery-track img {
+      width: 250px;
+      height: 350px;
+      object-fit: cover;
+      margin-right: 10px;
+      border: 2px solid #ccc;
+      flex-shrink: 0;
+      border-radius: 4px;
+    }
+    .quote {
+      font-style: italic;
+      background: #e0e0e0;
+      padding: 1rem;
+      border-left: 4px solid #004080;
+    }
+    footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    .socials {
+      margin-top: 1rem;
+    }
+    .socials a {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #ffffff;
+      color: #004080;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .socials a img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+    .socials a:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Mr. Walsh's Fanpage</h1>
+    <nav>
+      <a href="#info">Information</a>
+      <a href="#gallery">Photo Gallery</a>
+      <a href="activities.html">Activities</a>
+    </nav>
+  </header>
+
+  <section id="info">
+    <h2>About Mr. Walsh</h2>
+    <p>Mr. Walsh is an inspiring educator who always brings enthusiasm into the classroom. He enjoys helping students reach their full potential and makes learning engaging and fun.</p>
+    <div class="quote">"Vocabulary is paramount to literacy. Those who do not spend entire class periods learning this subject are destined to be illiterate." – Mr. Walsh (probably)</div>
+  </section>
+
+  <section id="gallery">
+    <h2>Photo Gallery</h2>
+    <div class="gallery-container">
+      <div class="gallery-track" id="gallery-track">
+        <!-- List any number of images here -->
+        <img src="6055296212968785018.JPG" alt="Mr. Walsh 1">
+        <img src="7867824745930848090.JPG" alt="Mr. Walsh 2">
+        <img src="99997223278259645.JPG" alt="Mr. Walsh 3">
+        <img src="9153137169843641616.JPG" alt="Mr. Walsh 4">
+        <!-- Add more <img> tags as needed -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Connect with Mr. Walsh:</div>
+    <div class="socials">
+      <a href="https://facebook.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook">Facebook
+      </a>
+      <a href="https://twitter.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter">Twitter
+      </a>
+      <a href="https://www.ratemyteachers.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/60/60740.png" alt="Rate My Teachers">Rate My Teachers
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const track = document.getElementById('gallery-track');
+      const images = Array.from(track.querySelectorAll('img'));
+      const originalCount = images.length;
+      
+      // Clone originals for seamless looping
+      images.forEach(img => track.appendChild(img.cloneNode()));
+      
+      // After clones are appended, calculate widths
+      const firstImg = track.querySelector('img');
+      const style = getComputedStyle(firstImg);
+      const imgWidth = firstImg.getBoundingClientRect().width;
+      const marginRight = parseFloat(style.marginRight);
+      const itemWidth = imgWidth + marginRight;
+      const totalItems = track.querySelectorAll('img').length;
+      const trackWidth = itemWidth * totalItems;
+      track.style.width = trackWidth + 'px';
+
+      // Compute scroll distance without extra gap
+      const scrollDistance = itemWidth * originalCount;
+      
+      // Create dynamic keyframes based on computed scroll
+      const styleSheet = document.createElement('style');
+      styleSheet.innerHTML = `
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-${scrollDistance}px); }
+        }
+        .gallery-track { animation: scroll 25s linear infinite; }
+      `;
+      document.head.appendChild(styleSheet);
+    });
+  </script>
+</body>
+</html>
